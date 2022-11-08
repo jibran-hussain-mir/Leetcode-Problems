@@ -1,0 +1,15 @@
+class Solution {
+public:
+    bool isPowerOfTwo(int n) {
+        if(n==1) return true;
+        int prod=1;
+        for(int i=1;i<31;i++)
+            {
+                prod=prod*2;
+                if(prod==n)
+                    return true;
+            }
+            return false;
+        
+    }
+};
