@@ -11,6 +11,7 @@ class Solution{
 public:
     void segregate0and1(int arr[], int n) {
         // code here
+        // Approach 1
         int count_zero=0,count_one=0;
         for(int i=0;i<n;i++)
             {
@@ -25,6 +26,29 @@ public:
             {
                 arr[j]=1;
             }
+        
+        // Approach 2
+        // sort(arr.begin(),arr.end()); Not Working
+        
+        // Approach 3 (Two Pointer Approach)
+        // int i=0,j=n-1;
+        // while(i<j)
+        // {
+        //     while(arr[i]==0 && i<j)
+        //     {
+        //         i++;
+        //     }
+        //     while(arr[j]==1 && i<j)
+        //     {
+        //         j++;
+        //     }
+        //     if(i<j)
+        //         {
+        //             swap(arr[i],arr[j]);
+        //             i++;
+        //             j--;
+        //         }
+        // }
     }
 };
 
