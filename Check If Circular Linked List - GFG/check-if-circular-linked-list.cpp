@@ -69,18 +69,38 @@ struct Node
     
 }; 
 */
-
+#include<bits/stdc++.h>
 /* Should return true if linked list is circular, else false */
 bool isCircular(Node *head)
 {
-   // Your code here
-   Node* temp=head->next;
-   while(temp != NULL)
+    // Approach 1
+//   // Your code here
+//   if(head == NULL)
+//     {
+//         return false;
+//     }
+//   Node* temp=head->next;
+//   while(temp != NULL)
+//     {
+//         if(temp==head)
+//             {
+//                 return true;
+//             }
+//         temp=temp->next;
+//     }
+//     return false;
+
+// Approach 2
+map<Node*,bool> visited;
+Node* temp=head;
+
+while(temp != NULL)
     {
-        if(temp==head)
+        if(visited[temp] == true)
             {
                 return true;
             }
+        visited[temp]=true;
         temp=temp->next;
     }
     return false;
