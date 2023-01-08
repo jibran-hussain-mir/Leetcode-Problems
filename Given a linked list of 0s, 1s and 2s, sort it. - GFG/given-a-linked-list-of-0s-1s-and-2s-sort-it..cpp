@@ -36,46 +36,58 @@ class Solution
     Node* segregate(Node *head) {
         
         // Add code here
-        int count0,count1,count2;
-        count0=count1=count2=0;
-        Node* temp=head;
-        while(temp!=NULL)
-            {
-               if(temp->data == 0) count0++;
-               else if (temp->data == 1) count1++;
-               else count2++;
-               temp=temp->next;
-            }
-        temp=head;
-        int count=1;
+        Node *zeroHead=new Node(-1);
+        Node *oneHead=new Node(-1);
+        Node *twoHead=new Node(-1);
+        Node *zeroTail=zeroHead;
+        Node *oneTail=oneHead;
+        Node *twoTail=twoHead;
         
-        // Insert 0's
-        while(count <= count0)
+        Node *curr=head;
+        while(curr != NULL)
             {
-                temp->data=0;
-                temp=temp->next;
-                count++;
-            }
-        count=1;
-        
-        // Insert 1's
-        while(count <= count1)
-            {
-                temp->data=1;
-                temp=temp->next;
-                count++;
-            }
-        count=1;
-        
-        // Insert 2's
-        while(count <= count2)
-            {
-                temp->data=2;
-                temp=temp->next;
-                count++;
+                int value=curr->data;
+                Node* temp=new Node(value);
+                if(value == 0)
+                    {
+                        zeroTail->next = temp;
+                        zeroTail=temp;
+                    }
+                else if(value == 1)
+                    {
+                       oneTail->next = temp;
+                       oneTail=temp; 
+                    }
+                    
+                else
+                    {
+                       twoTail->next = temp;
+                       twoTail=temp; 
+                    }
+                    curr=curr->next;
             }
             
-        return head;
+            // Merging the 3 linked lists
+            if(oneHead->next == NULL)
+                {
+                    zeroTail->next=twoHead->next;
+                }
+                else
+                {
+                      zeroTail->next=oneHead->next;
+                      oneTail->next=twoHead->next;
+                }
+                
+            
+            twoTail->next=NULL;
+            
+            head=zeroHead->next;
+            
+            delete zeroHead;
+            delete oneHead;
+            delete twoHead;
+            
+            return head;
     }
 };
 
