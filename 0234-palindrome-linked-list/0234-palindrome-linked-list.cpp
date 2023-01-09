@@ -10,37 +10,56 @@
  */
 class Solution {
 public:
+    
+    ListNode* reverse(ListNode* &temp)
+    {
+        
+        ListNode* prev=NULL;
+        ListNode* forward=NULL;
+        while(temp != NULL)
+        {
+            forward=temp->next;
+            temp->next=prev;
+            prev=temp;
+            temp=forward;
+        }
+        return prev;
+        
+    }
+    
     bool isPalindrome(ListNode* head) {
         
-        if(head == NULL || head->next == NULL)
+        if(head->next == NULL) return true;
+        
+        ListNode *prev=NULL;
+        ListNode *slow=head;
+        ListNode *fast=head->next;
+        
+        while(fast != NULL && fast->next != NULL)
         {
-            return true;
+            prev=slow;
+            slow=slow->next;
+            fast=fast->next->next;
         }
+        ListNode* nextHead=reverse(slow->next);
+        if(prev != NULL)            
+            prev->next->next=nextHead;
+        else slow->next=nextHead;
+//         Comparing the two parts for palindrome
         
-//     Copy the elements of linked list in vector
-        vector<int> v;
-        while(head != NULL)
+        ListNode* curr1=head;
+        ListNode* curr2=nextHead;
+        
+        while(curr2 != NULL)
         {
-            v.push_back(head->val);
-            head=head->next;
-        }
-        
-//     Size of an array
-        int len=v.size();
-        
-        int s=0,e=len-1;
-        
-        while(s < e)
-        {
-            if(v[s] == v[e])
-            {
-                s++;
-                e--;
-            }
-            else{
+            if(curr1->val != curr2->val)
                 return false;
-            }
+            curr2=curr2->next;
+            curr1=curr1->next;
         }
+        
+        
         return true;
+        
     }
 };
