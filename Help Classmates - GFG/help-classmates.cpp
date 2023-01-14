@@ -14,20 +14,46 @@ class Solution{
     vector<int> help_classmate(vector<int> arr, int n) 
     { 
         // Your code goes here
+        
+        // Approach 1
+        // vector<int> v;
+        // for(int i=0;i<n;i++)
+        //     {
+        //      int x=-1;
+        //      for(int j=i+1;j<n;j++)
+        //         {
+        //             if(arr[j] < arr[i])
+        //                 {
+        //                     x=arr[j];
+        //                     break;
+        //                 }
+        //         }
+        //         v.push_back(x);
+        //     }
+        //     return v;
+        
+        // Approach 2
+        
+        stack<int> st;
         vector<int> v;
-        for(int i=0;i<n;i++)
+        st.push(-1);
+        for(int i=n-1;i>=0;i--)
             {
-             int x=-1;
-             for(int j=i+1;j<n;j++)
-                {
-                    if(arr[j] < arr[i])
+                if(st.top() < arr[i])
+                    {
+                        v.push_back(st.top());
+                        st.push(arr[i]);
+                    }
+                else {
+                    while(st.top() >= arr[i])
                         {
-                            x=arr[j];
-                            break;
+                            st.pop();
                         }
-                }
-                v.push_back(x);
+                    v.push_back(st.top());
+                    st.push(arr[i]);
+                }   
             }
+            reverse(v.begin(),v.end());
             return v;
     } 
 };
