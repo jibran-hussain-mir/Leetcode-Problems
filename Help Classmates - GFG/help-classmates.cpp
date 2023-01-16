@@ -35,7 +35,7 @@ class Solution{
         // Approach 2
         
         stack<int> st;
-        vector<int> v;
+        vector<int> v(n);
         st.push(-1);
         for(int i=n-1;i>=0;i--)
             {
@@ -43,11 +43,10 @@ class Solution{
                         {
                             st.pop();
                         }
-                    v.push_back(st.top());
+                    v[i]=st.top();
                     st.push(arr[i]);
                  
             }
-            reverse(v.begin(),v.end());
             return v;
     } 
 };
