@@ -11,29 +11,56 @@
  */
 class Solution {
 public:
-    int height(TreeNode* root)
+//     int height(TreeNode* root)
+//     {
+//         if(root == NULL)
+//             return 0;
+        
+//         int leftSubtree=height(root->left);
+//         int rightSubtree=height(root->right);
+        
+//         int ans=max(leftSubtree,rightSubtree)+1;
+        
+//         return ans;
+//     }
+    
+//     bool isBalanced(TreeNode* root) {
+//         if(root == NULL)
+//             return true;
+//         bool left=isBalanced(root->left);
+//         bool right=isBalanced(root->right);
+        
+//         bool diff=abs(height(root->left)-height(root->right)) <= 1;
+        
+//         if(left && right && diff)
+//             return true;
+//         return false;
+//     }
+    
+    pair<bool,int> check(TreeNode* root)    
     {
         if(root == NULL)
-            return 0;
+        {
+            pair<bool,int> p=make_pair(true,0);
+            return p;
+        }
         
-        int leftSubtree=height(root->left);
-        int rightSubtree=height(root->right);
+        pair<bool,int> left=check(root->left);
+        pair<bool,int> right=check(root->right);
+        bool diff=abs(left.second-right.second) <= 1;
+
         
-        int ans=max(leftSubtree,rightSubtree)+1;
-        
+        pair<bool,int> ans;
+        if(left.first && right.first && diff)
+        {
+            ans.first=true;
+        }
+        ans.second=max(left.second,right.second)+1;
         return ans;
     }
     
-    bool isBalanced(TreeNode* root) {
-        if(root == NULL)
-            return true;
-        bool left=isBalanced(root->left);
-        bool right=isBalanced(root->right);
-        
-        bool diff=abs(height(root->left)-height(root->right)) <= 1;
-        
-        if(left && right && diff)
-            return true;
-        return false;
+    bool isBalanced(TreeNode* root)
+    {
+        return check(root).first;
     }
 };
