@@ -27,10 +27,10 @@ public:
     bool isBalanced(TreeNode* root) {
         if(root == NULL)
             return true;
-        int left=isBalanced(root->left);
-        int right=isBalanced(root->right);
+        bool left=isBalanced(root->left);
+        bool right=isBalanced(root->right);
         
-        int diff=abs(height(root->left)-height(root->right)) <= 1;
+        bool diff=abs(height(root->left)-height(root->right)) <= 1;
         
         if(left && right && diff)
             return true;
