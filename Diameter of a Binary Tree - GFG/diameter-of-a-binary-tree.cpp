@@ -94,30 +94,59 @@ struct Node
 class Solution {
   public:
   
-  int height(struct Node* node){
-        // code here 
+    // Approach1 T.C = O(N^2)
+  
+//   int height(struct Node* node){
+//         // code here 
         
-        if(node == NULL)
-            return 0;
+//         if(node == NULL)
+//             return 0;
         
-        int leftHeight=height(node->left);
-        int rightHeight=height(node->right);
+//         int leftHeight=height(node->left);
+//         int rightHeight=height(node->right);
         
-        int ans=max(leftHeight,rightHeight)+1;
+//         int ans=max(leftHeight,rightHeight)+1;
+//         return ans;
+//     }
+//     // Function to return the diameter of a Binary Tree.
+//     int diameter(Node* root) {
+//         // Your code here
+//         if(root == NULL)
+//             return 0;
+        
+//         int opt1=diameter(root->left);
+//         int opt2=diameter(root->right);
+        
+//         int opt3=height(root->left)+height(root->right)+1;
+//         int ans=max(opt1,max(opt2,opt3));
+//         return ans;
+//     }
+    
+    // Approach TC=O(N)
+    pair<int,int> fastDiameter(Node* root)
+        {
+            if(root == NULL)
+                {
+                    pair<int,int> p=make_pair(0,0);
+                    return p;
+                }
+            
+        pair<int,int> left=fastDiameter(root->left);
+        pair<int,int> right=fastDiameter(root->right);
+        
+        int op1=left.first;
+        int op2=right.first;
+        int op3=left.second+right.second+1;
+        
+        pair<int,int> ans;
+        ans.first=max(op1,max(op2,op3));
+        ans.second=max(left.second,right.second)+1;
+        
         return ans;
-    }
-    // Function to return the diameter of a Binary Tree.
-    int diameter(Node* root) {
-        // Your code here
-        if(root == NULL)
-            return 0;
-        
-        int opt1=diameter(root->left);
-        int opt2=diameter(root->right);
-        
-        int opt3=height(root->left)+height(root->right)+1;
-        int ans=max(opt1,max(opt2,opt3));
-        return ans;
+        }
+    
+    int diameter(Node* root){
+        return fastDiameter(root).first;
     }
 };
 
