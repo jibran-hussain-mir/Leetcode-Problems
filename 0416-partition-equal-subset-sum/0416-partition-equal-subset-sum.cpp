@@ -1,18 +1,6 @@
 class Solution {
 public:
-    int result(vector<int> & nums,int index,int target,vector<vector<int>> &dp){
-        
-        if(target == 0) return true;
-        if(index == 0) return nums[0] == target;
-        
-        if(dp[index][target] != -1) return dp[index][target];
-        
-        int notPick = result(nums,index-1,target,dp);
-        int pick=0;
-        if(target >= nums[index])  pick = result(nums,index-1,target-nums[index],dp);
-        
-        return dp[index][target]=notPick | pick;
-    }
+
     
     bool canPartition(vector<int>& nums) {
         int sum=0;
@@ -20,10 +8,28 @@ public:
             sum=sum+nums[i];
         }
         cout<<sum/2<<endl;
-        if(sum % 2 != 0) return false;
-                vector<vector<int>> dp(nums.size(),vector<int>(sum/2 +1,-1));
+        if(sum % 2 != 0 || nums.size() == 1) return false;
 
         
-        return result(nums,nums.size()-1,sum/2,dp);
+        vector<vector<bool>> dp(nums.size(),vector<bool>(sum,false)); 
+for(int row=0;row < nums.size();row++){
+    dp[row][0]=true;
+}
+dp[0][nums[0]]=true;
+
+for(int index = 1;index < nums.size();index++){
+    for(int target=1;target<=sum/2;target++){
+        bool notPick=dp[index-1][target];
+        bool pick=false;
+        if(target >= nums[index]) pick=dp[index-1][target-nums[index]];
+        dp[index][target]= pick | notPick;
+    }
+}
+
+return dp[nums.size()-1][sum/2];
     }
 };
+
+
+
+
